@@ -2,6 +2,7 @@ import React from "react";
 import { Goal, Star, Video } from "lucide-react";
 import { motion } from "framer-motion"; 
 import { Link } from "react-router-dom";
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
 
 function Hero() {
   return (
@@ -14,6 +15,37 @@ function Hero() {
         className="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
       />
 
+
+<div className="absolute top-6 right-10 z-30">
+  <SignedOut>
+   <Link
+  to="/auth"
+  className="relative inline-flex items-center px-6 py-2.5 rounded-xl font-semibold text-white 
+             bg-gradient-to-r from-orange-500 via-orange-600 to-orange-700 
+             shadow-lg shadow-orange-500/40 
+             transition-all duration-300 ease-out 
+             hover:scale-105 hover:shadow-orange-400/60"
+>
+  <span className="relative z-10">Sign In</span>
+  {/* Glow effect */}
+  <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 opacity-0 blur-lg transition-opacity duration-300 group-hover:opacity-40"></span>
+</Link>
+
+  </SignedOut>
+
+  <SignedIn>
+    <UserButton
+      appearance={{
+        elements: {
+          avatarBox: "w-24 h-24",
+        },
+      }}
+    />
+  </SignedIn>
+</div>
+
+      
+
       {/* Glowing Blobs */}
       <motion.div
         className="absolute top-10 right-10 w-48 h-48 rounded-full z-10"
@@ -24,7 +56,6 @@ function Hero() {
         animate={{ y: [0, -20, 0], x: [0, 10, 0], scale: [1, 1.1, 1] }}
         transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
       />
-
       <motion.div
         className="absolute bottom-10 left-10 w-56 h-56 rounded-full z-10"
         style={{
@@ -52,27 +83,25 @@ function Hero() {
         </div>
 
         {/* Heading */}
-   <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-extrabold leading-[1.05] mb-10 max-w-6xl">
-  <span className="inline-block transform hover:scale-110 transition-transform duration-300 uppercase text-7xl">
-    Welcome
-  </span>
-  <br />
-  <span className="text-orange-400 inline-block transform hover:scale-110 transition-transform duration-300 delay-100 uppercase">
-    To
-  </span>
-  <br className="md:hidden" /><br />
-  <span 
-    className="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent inline-block transform hover:scale-110 transition-transform duration-300 delay-300 text-7xl"
-  
-  >
-    Your SIH2k25
-  </span>
-  <br />
-  <span className="inline-block transform hover:scale-110 transition-transform duration-300 delay-400 uppercase">
-    Buddy
-  </span>
-</h1>
-
+        <h1 className="text-7xl sm:text-8xl md:text-9xl lg:text-[10rem] font-extrabold leading-[1.05] mb-10 max-w-6xl">
+          <span className="inline-block transform hover:scale-110 transition-transform duration-300 uppercase text-7xl">
+            Welcome
+          </span>
+          <br />
+          <span className="text-orange-400 inline-block transform hover:scale-110 transition-transform duration-300 delay-100 uppercase">
+            To
+          </span>
+          <br className="md:hidden" /><br />
+          <span 
+            className="bg-gradient-to-r from-orange-300 via-orange-400 to-orange-500 bg-clip-text text-transparent inline-block transform hover:scale-110 transition-transform duration-300 delay-300 text-7xl"
+          >
+            Your SIH2k25
+          </span>
+          <br />
+          <span className="inline-block transform hover:scale-110 transition-transform duration-300 delay-400 uppercase">
+            Buddy
+          </span>
+        </h1>
 
         {/* Subheading */}
         <p className="max-w-3xl mx-auto text-lg md:text-xl text-white/90 mb-12 leading-relaxed">
@@ -81,7 +110,7 @@ function Hero() {
         </p>
 
         {/* Problem list */}
-       <div className="relative max-w-2xl mx-auto">
+        <div className="relative max-w-2xl mx-auto">
           {/* Glass Card Effect */}
           <div className="bg-black/40 backdrop-blur-xl rounded-3xl p-10 md:p-12 border border-white/10 shadow-2xl">
             <h3 className="text-2xl font-bold mb-8 text-orange-300">No More:</h3>
@@ -110,32 +139,25 @@ function Hero() {
               style={{ filter: 'drop-shadow(0 0 20px rgba(239, 68, 68, 0.5))' }}
             />
           </div>
-          
         </div>
-   
 
-{/* Minimal Buttons */}
-<div className="flex flex-col sm:flex-row justify-center gap-6 mt-12">
-  {/* View Problem Statements Button */}
-  <Link
-    to="/problems"
-    className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-white bg-orange-500/90 hover:bg-orange-500/100 transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105"
-  >
-    View Problem Statements <Goal className="w-5 h-5" />
-  </Link>
-  {/* Latest YouTube Videos Button */}
-   <Link
-    to="/videos"
-    className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-black bg-yellow-400/90 hover:bg-yellow-400/100 transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105"
-  >
-    Latest YT Videos <Video className="w-5 h-5" />
-  </Link>
-</div>
-
-
+        {/* Minimal Buttons */}
+        <div className="flex flex-col sm:flex-row justify-center gap-6 mt-12">
+          <Link
+            to="/problems"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-white bg-orange-500/90 hover:bg-orange-500/100 transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105"
+          >
+            View Problem Statements <Goal className="w-5 h-5" />
+          </Link>
+          <Link
+            to="/videos"
+            className="inline-flex items-center gap-3 px-6 py-3 rounded-lg font-semibold text-black bg-yellow-400/90 hover:bg-yellow-400/100 transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105"
+          >
+            Latest YT Videos <Video className="w-5 h-5" />
+          </Link>
+        </div>
       </div>
-      </div>
-
+    </div>
   );
 }
 
