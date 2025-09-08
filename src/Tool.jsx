@@ -6,6 +6,7 @@ const SIHProblemStatements = () => {
 
   const [activeFilter, setActiveFilter] = useState('all');
   const [highlightedRow, setHighlightedRow] = useState(null);
+const [activeThemeFilter, setActiveThemeFilter] = useState('all');
 
   const problemStatements = [
     [1,"Ministry of Development of North Eastern Region","Smart Community Health Monitoring and Early Warning System for Water-Borne Diseases in Rural Northeast India","Software","SIH25001","MedTech / BioTech / HealthTech"],
@@ -145,14 +146,48 @@ const SIHProblemStatements = () => {
     [135,"AICTE","Student Innovation","Software","SIH25142","Space Technology"]
   ];
 
+const themes = [
+  'Agriculture, FoodTech & Rural Development',
+  'Blockchain & Cybersecurity',
+  'Clean & Green Technology',
+  'Disaster Management',
+  'Fitness & Sports',
+  'Heritage & Culture',
+  'MedTech / BioTech / HealthTech',
+  'Miscellaneous',
+  'Renewable / Sustainable Energy',
+  'Robotics and Drones',
+  'Smart Automation',
+  'Smart Education',
+  'Space Technology',
+  'Smart Vehicles',
+  'Toys & Games',
+  'Transportation & Logistics',
+  'Travel & Tourism'
+];
+
   const filteredData = useMemo(() => {
-    if (activeFilter === 'all') return problemStatements;
-    return problemStatements.filter(row => row[3].toLowerCase() === activeFilter);
-  }, [activeFilter]);
+  let filtered = problemStatements;
+  
+  // Filter by category (Software/Hardware)
+  if (activeFilter !== 'all') {
+    filtered = filtered.filter(row => row[3].toLowerCase() === activeFilter);
+  }
+  
+  // Filter by theme
+  if (activeThemeFilter !== 'all') {
+    filtered = filtered.filter(row => row[5] === activeThemeFilter);
+  }
+  
+  return filtered;
+}, [activeFilter, activeThemeFilter]);
 
   const softwareCount = problemStatements.filter(row => row[3] === 'Software').length;
   const hardwareCount = problemStatements.filter(row => row[3] === 'Hardware').length;
-
+// Get theme counts
+const getThemeCount = (theme) => {
+  return problemStatements.filter(row => row[5] === theme).length;
+};
   const handleRowClick = (index) => {
     setHighlightedRow(index);
     setTimeout(() => setHighlightedRow(null), 2000);
@@ -170,6 +205,19 @@ const SIHProblemStatements = () => {
       {children}
     </button>
   );
+
+  const ThemeFilterButton = ({ theme, children }) => (
+  <button
+    onClick={() => setActiveThemeFilter(theme)}
+    className={`px-3 py-2 border-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+      activeThemeFilter === theme
+        ? 'bg-purple-600 border-purple-600 text-white'
+        : 'bg-white border-gray-300 text-gray-600 hover:border-purple-600 hover:text-purple-600'
+    }`}
+  >
+    {children}
+  </button>
+);
 
   return (
     <div className="max-w-full mx-auto bg-white rounded-xl shadow-lg ">
@@ -214,28 +262,51 @@ const SIHProblemStatements = () => {
 </div>
 
 {/* Filter Container */}
-<div className="p-5 border-b border-gray-200 bg-white flex flex-wrap gap-3 items-center justify-center shadow-sm">
-  <span className="font-semibold text-gray-700 text-sm uppercase tracking-wide">
-    Filter by Category:
-  </span>
+{/* Filter Container */}
+<div className="p-5 border-b border-gray-200 bg-white shadow-sm">
+  {/* Category Filter */}
+  <div className="flex flex-wrap gap-3 items-center justify-center mb-4">
+    <span className="font-semibold text-gray-700 text-sm uppercase tracking-wide">
+      Filter by Category:
+    </span>
 
-  <FilterButton filter="all" className="!bg-gray-700 !border-gray-700">
-    All (135)
-  </FilterButton>
+    <FilterButton filter="all" className="!bg-gray-700 !border-gray-700">
+      All (135)
+    </FilterButton>
 
-  <FilterButton
-    filter="software"
-    className="!bg-green-600 !border-green-600 hover:!bg-green-700"
-  >
-    Software ({softwareCount})
-  </FilterButton>
+    <FilterButton
+      filter="software"
+      className="!bg-green-600 !border-green-600 hover:!bg-green-700"
+    >
+      Software ({softwareCount})
+    </FilterButton>
 
-  <FilterButton
-    filter="hardware"
-    className="!bg-orange-500 !border-orange-500 hover:!bg-orange-600"
-  >
-    Hardware ({hardwareCount})
-  </FilterButton>
+    <FilterButton
+      filter="hardware"
+      className="!bg-orange-500 !border-orange-500 hover:!bg-orange-600"
+    >
+      Hardware ({hardwareCount})
+    </FilterButton>
+  </div>
+
+  {/* Theme Filter */}
+  <div className="border-t pt-4">
+    <div className=" cursor-pointer  flex flex-wrap gap-2 items-center justify-center">
+      <span className=" font-semibold text-gray-700 text-sm uppercase tracking-wide mb-2 w-full text-center">
+        Filter by Theme:
+      </span>
+      
+      <ThemeFilterButton theme="all">
+        All Themes
+      </ThemeFilterButton>
+      
+      {themes.map((theme, index) => (
+        <ThemeFilterButton key={index} theme={theme}>
+          {theme} ({getThemeCount(theme)})
+        </ThemeFilterButton>
+      ))}
+    </div>
+  </div>
 </div>
 
 
