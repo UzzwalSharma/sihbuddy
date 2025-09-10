@@ -3,6 +3,7 @@ import { Goal, Star, Video } from "lucide-react";
 import { motion } from "framer-motion"; 
 import { Link } from "react-router-dom";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+import SIHBuddyTimeline from "./Timeline";
 
 function Hero() {
   return (
@@ -156,8 +157,11 @@ function Hero() {
             Latest YT Videos <Video className="w-5 h-5" />
           </Link>
         </div>
+
       </div>
+    
     </div>
+    
   );
 }
 

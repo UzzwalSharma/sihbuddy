@@ -6,6 +6,7 @@ import SihVideos from "./Videos";
 import ProtectedRoute from "./ProtectedRoute";
 import { Toaster } from "react-hot-toast";
 import SignInPage from "./SignInPage";
+import Lamdimgpage from "./Lamdimgpage";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Toaster position="top-right" reverseOrder={false} />
 
         <Routes>
-          <Route path="/" element={<Hero />} />
+          <Route path="/" element={<Lamdimgpage/>} />
           <Route path="/auth" element={<SignInPage />} />
           <Route
             path="/problems"
